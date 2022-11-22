@@ -20,4 +20,7 @@ export const generalError = (
   res.status(statusCode).json({ message: publicMessage });
 };
 
-export default generalError;
+export const unknownEndpoint = (req: Request, res: Response) => {
+  debug("Unknown endpoint");
+  res.status(404).json({ message: "Unknown endpoint" });
+};
