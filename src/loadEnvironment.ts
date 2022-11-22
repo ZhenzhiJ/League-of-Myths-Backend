@@ -5,6 +5,7 @@ dotenv.config();
 interface Environment {
   port: number;
   debugApp: string;
+  mongoDebug: boolean;
   mongoDbUrl: string;
   jwtSecret: string;
   supabaseUrl: string;
@@ -14,6 +15,7 @@ interface Environment {
 const {
   PORT: port,
   DEBUG: debugApp,
+  MONGO_DEBUG: mongoDebug,
   MONGODB_URL: mongoDbUrl,
   JWT_SECRET: jwtSecret,
   SUPABASE_URL: supabaseUrl,
@@ -23,6 +25,7 @@ const {
 const environment: Environment = {
   port: +port,
   debugApp,
+  mongoDebug: mongoDebug === "true",
   mongoDbUrl,
   jwtSecret,
   supabaseUrl,
