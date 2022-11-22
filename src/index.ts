@@ -4,9 +4,9 @@ import app from "./server/app.js";
 import startServer from "./server/startServer.js";
 import connectDatabase from "./database/connectDatabase.js";
 
-const { port, debugApp, mongoDbUrl } = environment;
+const { port, mongoDbUrl } = environment;
 
-const debug = debugConfig(`${debugApp}:root`);
+const debug = debugConfig(`league-of-myths:root`);
 
 try {
   await startServer(app, port);
