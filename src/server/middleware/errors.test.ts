@@ -1,6 +1,6 @@
 import { generalError, unknownEndpoint } from "./errors";
 import type { Response } from "express";
-import CustomError from "../customError/CustomError";
+import CustomError from "../../customError/CustomError";
 
 beforeEach(() => {
   jest.clearAllMocks();
