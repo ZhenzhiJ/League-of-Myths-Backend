@@ -3,6 +3,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import connectDatabase from "../../../database/connectDatabase";
 import app from "../../app";
+import User from "../../../database/models/User";
 
 let server: MongoMemoryServer;
 
@@ -16,6 +17,9 @@ afterAll(async () => {
   await server.stop();
 });
 
+beforeEach(async () => {
+  await User.deleteMany({});
+});
 describe("Given the method POST and the endpoint '/users/register'", () => {
   const newUser = {
     username: "pikachu",
