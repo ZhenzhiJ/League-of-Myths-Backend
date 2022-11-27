@@ -1,8 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import type { RegisterData } from "./types.js";
+import jwt from "jsonwebtoken";
+import type { RegisterData, UserData } from "./types.js";
 import User from "../../../database/models/User.js";
 import CustomError from "../../../customError/CustomError.js";
+import environment from "../../../loadEnvironment.js";
+
+const { jwtSecret } = environment;
 
 export const registerUser = async (
   req: Request,
@@ -14,13 +18,13 @@ export const registerUser = async (
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await User.create({
+    await User.create({
       username,
       password: hashedPassword,
       email,
     });
 
-    res.status(201).json({ user: { username: newUser.username } });
+    res.status(201).json({ user: { username } });
   } catch (error: unknown) {
     const customError = new CustomError(
       (error as Error).message,
@@ -29,4 +33,45 @@ export const registerUser = async (
     );
     next(customError);
   }
+};
+
+export const loginUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { username, password } = req.body as UserData;
+
+  const user = await User.findOne({ username }).exec();
+
+  if (!user) {
+    const error = new CustomError(
+      "Username not found",
+      "Wrong credentials",
+      401
+    );
+    next(error);
+    return;
+  }
+
+  if (!(await bcrypt.compare(password, user.password))) {
+    const error = new CustomError(
+      "Password is incorrect",
+      "Wrong credentials",
+      401
+    );
+    next(error);
+    return;
+  }
+
+  const tokenPayload = {
+    id: user._id,
+    username,
+  };
+
+  const token = jwt.sign(tokenPayload, jwtSecret, {
+    expiresIn: "2d",
+  });
+
+  res.status(200).json({ token });
 };

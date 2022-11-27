@@ -1,10 +1,13 @@
 import express from "express";
 import { validate } from "express-validation";
-import { registerUser } from "../../controllers/userControllers/userControllers.js";
+import {
+  loginUser,
+  registerUser,
+} from "../../controllers/userControllers/userControllers.js";
 import routes from "../routes.js";
 import userSchema from "../../schemas/userSchema.js";
 
-const { register } = routes;
+const { register, login } = routes;
 
 // eslint-disable-next-line new-cap
 const userRouter = express.Router();
@@ -14,5 +17,7 @@ userRouter.post(
   validate(userSchema, {}, { abortEarly: false }),
   registerUser
 );
+
+userRouter.post(login, loginUser);
 
 export default userRouter;
