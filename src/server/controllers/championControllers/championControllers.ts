@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import Champion from "../../../database/models/Champion";
+import Champion from "../../../database/models/Champion.js";
 
 export const loadChampions = async (
   req: Request,
