@@ -1,7 +1,7 @@
 import "../../loadEnvironment.js";
 import type { NextFunction, Request, Response } from "express";
 import debugConfig from "debug";
-import type CustomError from "../../customError/CustomError";
+import type CustomError from "../../customError/CustomError.js";
 
 const debug = debugConfig(`league-of-myths:errors`);
 
