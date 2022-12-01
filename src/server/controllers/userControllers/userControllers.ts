@@ -1,10 +1,10 @@
+import environment from "../../../loadEnvironment.js";
 import type { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import type { RegisterData, UserData } from "./types.js";
 import User from "../../../database/models/User.js";
 import CustomError from "../../../customError/CustomError.js";
-import environment from "../../../loadEnvironment.js";
 
 const { jwtSecret } = environment;
 
