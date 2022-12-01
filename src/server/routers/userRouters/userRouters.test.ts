@@ -39,6 +39,22 @@ describe("Given the method POST and the endpoint '/users/register'", () => {
       expect(response.body).toHaveProperty("user");
     });
   });
+
+  describe("When it receives a request with username 'pikachu', password 'pikachu' and email 'pokachu@chu.com' with no allowed origin", () => {
+    test("Then it should respond with a 500 and a property user", async () => {
+      const expectedResponseBody = {
+        message: "Failed to connect to the server.",
+      };
+
+      const response = await request(app)
+        .post("/users/register")
+        .set({ origin: "http://localhost:500" })
+        .send(newUser)
+        .expect(500);
+
+      expect(response.body).toStrictEqual(expectedResponseBody);
+    });
+  });
 });
 
 describe("Given a POST /users/login endpoint", () => {
