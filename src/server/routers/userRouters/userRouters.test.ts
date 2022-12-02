@@ -10,16 +10,19 @@ let server: MongoMemoryServer;
 
 beforeAll(async () => {
   server = await MongoMemoryServer.create();
-  await connectDatabase(server.getUri());
+  const uri = server.getUri();
+  await connectDatabase(uri);
+  await User.deleteMany();
+});
+
+beforeEach(async () => {
+  await User.deleteMany();
+  jest.clearAllMocks();
 });
 
 afterAll(async () => {
   await mongoose.disconnect();
   await server.stop();
-});
-
-beforeEach(async () => {
-  await User.deleteMany({});
 });
 
 describe("Given the method POST and the endpoint '/users/register'", () => {
