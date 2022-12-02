@@ -8,6 +8,8 @@ export interface ChampionStructure {
   abilityW: string;
   abilityE: string;
   ultimateR: string;
+  image: string;
+  imageBackup: string;
   _id?: mongoose.Types.ObjectId;
 }
 

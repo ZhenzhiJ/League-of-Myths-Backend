@@ -19,6 +19,8 @@ describe("Given the loadChampions controller", () => {
     abilityE: "cola ferrea",
     abilityW: "surf",
     ultimateR: "vuelo",
+    image: "",
+    imageBackup: "",
   };
 
   describe("When it receives a request to load all champions", () => {
