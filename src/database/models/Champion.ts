@@ -29,6 +29,14 @@ const championSchema = new Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+    required: true,
+  },
+  imageBackup: {
+    type: String,
+    required: true,
+  },
 });
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

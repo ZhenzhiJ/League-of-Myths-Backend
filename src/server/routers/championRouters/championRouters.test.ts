@@ -14,6 +14,8 @@ const newChampion1: ChampionStructure = {
   abilityE: "cola ferrea",
   abilityW: "surf",
   ultimateR: "vuelo",
+  image: "asd.png",
+  imageBackup: "asd.png",
 };
 
 const newChampion2: ChampionStructure = {
@@ -24,6 +26,8 @@ const newChampion2: ChampionStructure = {
   abilityE: "cola ferrea",
   abilityW: "surf",
   ultimateR: "vuelo",
+  image: "asd.png",
+  imageBackup: "asd.png",
 };
 
 let server: MongoMemoryServer;
