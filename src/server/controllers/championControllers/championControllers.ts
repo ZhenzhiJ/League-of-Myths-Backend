@@ -8,11 +8,8 @@ export const loadChampions = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { champions } = req;
   try {
-    const allChampions = await Champion.find({
-      _id: { $in: champions },
-    });
+    const allChampions = await Champion.find();
 
     res.status(200).json({ allChampions });
   } catch (error: unknown) {
