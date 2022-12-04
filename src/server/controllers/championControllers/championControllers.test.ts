@@ -1,6 +1,8 @@
 import type { Response, Request, NextFunction } from "express";
+import mongoose from "mongoose";
 import Champion from "../../../database/models/Champion";
-import { loadChampions } from "./championControllers";
+import type { CustomRequest } from "../../CustomRequest";
+import { deleteChampion, loadChampions } from "./championControllers";
 import type { ChampionStructure } from "./types";
 
 const res: Partial<Response> = {
@@ -58,6 +60,35 @@ describe("Given the loadChampions controller", () => {
       );
 
       expect(next).toHaveBeenCalled();
+    });
+  });
+});
+
+describe("Given the deleteCharacter controller", () => {
+  const idToFind = new mongoose.Types.ObjectId();
+  const req: Partial<CustomRequest> = {
+    champions: [],
+    params: {},
+  };
+
+  describe("When it receives a request with championId by params", () => {
+    test("Then it should call response's method status with 200 and json with 'Champion succesfully deleted'", async () => {
+      req.params = { idChampion: idToFind.toString() };
+
+      Champion.findByIdAndDelete = jest
+        .fn()
+        .mockResolvedValueOnce({ text: "Champion succesfully deleted" });
+
+      await deleteChampion(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        text: "Champion succesfully deleted",
+      });
     });
   });
 });

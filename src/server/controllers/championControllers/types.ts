@@ -1,4 +1,5 @@
 import type mongoose from "mongoose";
+import type { Types } from "mongoose";
 
 export interface ChampionStructure {
   name: string;
@@ -15,4 +16,8 @@ export interface ChampionStructure {
 
 export interface Champions {
   champions: ChampionStructure[];
+}
+
+export interface ChampionWithId extends ChampionStructure {
+  _id: Types.ObjectId;
 }
