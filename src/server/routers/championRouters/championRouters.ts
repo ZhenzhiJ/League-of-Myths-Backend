@@ -8,9 +8,9 @@ import routes from "../routes.js";
 // eslint-disable-next-line new-cap
 const championRouter = express.Router();
 
-const { deleteRoute } = routes;
+const { deleteRoute, championId } = routes;
 
 championRouter.get("", loadChampions);
-championRouter.delete(deleteRoute, deleteChampion);
+championRouter.delete(`${deleteRoute}${championId}`, deleteChampion);
 
 export default championRouter;

@@ -3,7 +3,8 @@ const routes = {
   register: "/register",
   login: "/login",
   champions: "/champions",
-  deleteRoute: "/delete/:idChampion",
+  deleteRoute: "/delete",
+  championId: "/:idChampion",
 };
 
 export default routes;

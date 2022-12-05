@@ -1,4 +1,4 @@
-import type { Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import CustomError from "../../../customError/CustomError.js";
 import Champion from "../../../database/models/Champion.js";
 import type { CustomRequest } from "../../CustomRequest.js";
@@ -18,14 +18,15 @@ export const loadChampions = async (
 };
 
 export const deleteChampion = async (
-  req: CustomRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const { idChampion } = req.params;
+  const { idChampion } = req.params;
 
+  try {
     await Champion.findByIdAndDelete(idChampion);
+
     res.status(200).json({ text: "Champion succesfully deleted" });
   } catch (error: unknown) {
     const fatalError = new CustomError(
