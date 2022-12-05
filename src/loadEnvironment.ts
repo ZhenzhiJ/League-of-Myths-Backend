@@ -10,6 +10,8 @@ interface Environment {
   jwtSecret: string;
   supabaseUrl: string;
   supabaseKey: string;
+  uploadPath: string;
+  supabaseBucket: string;
 }
 
 const {
@@ -20,6 +22,8 @@ const {
   JWT_SECRET: jwtSecret,
   SUPABASE_URL: supabaseUrl,
   SUPABASE_KEY: supabaseKey,
+  UPLOAD_PATH: uploadPath,
+  SUPABASE_BUCKET: supabaseBucket,
 } = process.env;
 
 const environment: Environment = {
@@ -30,6 +34,8 @@ const environment: Environment = {
   jwtSecret,
   supabaseUrl,
   supabaseKey,
+  supabaseBucket,
+  uploadPath,
 };
 
 export default environment;

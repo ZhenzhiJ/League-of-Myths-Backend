@@ -5,6 +5,7 @@ const routes = {
   champions: "/champions",
   deleteRoute: "/delete",
   championId: "/:idChampion",
+  createRoute: "/create",
 };
 
 export default routes;
