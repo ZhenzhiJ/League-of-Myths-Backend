@@ -30,6 +30,10 @@ beforeAll(async () => {
   await fs.writeFile(path.join(uploadPath, "filehash"), Buffer.from(""));
 });
 
+afterAll(async () => {
+  await fs.unlink(`${uploadPath}/image-${timestamp}.jpg`);
+});
+
 beforeEach(() => {
   jest.clearAllMocks();
 });
