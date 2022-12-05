@@ -91,4 +91,27 @@ describe("Given the deleteCharacter controller", () => {
       });
     });
   });
+
+  describe("When it receives a request with championId by params", () => {
+    test("Then it should call response's method status with 200 and json with 'Champion succesfully deleted'", async () => {
+      const req: Partial<Request> = {
+        params: { idChampion: "1" },
+      };
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+
+      Champion.findByIdAndDelete = jest.fn().mockRejectedValue(new Error(""));
+
+      await deleteChampion(
+        req as Request,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(next).toHaveBeenCalled();
+    });
+  });
 });
