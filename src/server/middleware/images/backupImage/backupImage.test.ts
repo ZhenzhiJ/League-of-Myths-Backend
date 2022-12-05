@@ -1,8 +1,8 @@
 import type { NextFunction } from "express";
 import fs from "fs/promises";
-import { getRandomChampion } from "../../../../factories/championFactory";
-import type { CustomRequest } from "../../../CustomRequest";
-import imageBackup, { bucket } from "./backupImage";
+import { getRandomChampion } from "../../../../factories/championFactory.js";
+import type { CustomRequest } from "../../../CustomRequest.js";
+import imageBackup, { bucket } from "./backupImage.js";
 
 const newChampion = getRandomChampion();
 delete newChampion.imageBackup;

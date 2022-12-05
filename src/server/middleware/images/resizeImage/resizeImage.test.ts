@@ -1,7 +1,7 @@
 import type { NextFunction } from "express";
 import fs from "fs/promises";
 import { getRandomChampion } from "../../../../factories/championFactory";
-import environment from "../../../../loadEnvironment";
+import environment from "../../../../loadEnvironment.js";
 import type { CustomRequest } from "../../../CustomRequest";
 import resizeImage from "./resizeImage";
 

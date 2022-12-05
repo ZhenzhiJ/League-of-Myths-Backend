@@ -4,7 +4,7 @@ import path from "path";
 import { createClient } from "@supabase/supabase-js";
 import environment from "../../../../loadEnvironment.js";
 import type { ChampionStructure } from "../../../../database/models/Champion";
-import type { CustomRequest } from "../../../CustomRequest";
+import type { CustomRequest } from "../../../CustomRequest.js";
 
 const { supabaseBucket, supabaseKey, supabaseUrl, uploadPath } = environment;
 

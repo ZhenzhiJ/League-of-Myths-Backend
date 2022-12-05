@@ -1,5 +1,5 @@
 import type { NextFunction, Response, Request } from "express";
-import { bucket } from "../backupImage/backupImage";
+import { bucket } from "../backupImage/backupImage.js";
 
 export const getChampionImage = async (
   req: Request,
