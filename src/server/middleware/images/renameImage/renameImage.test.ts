@@ -26,13 +26,8 @@ const timestamp = Date.now();
 jest.useFakeTimers();
 jest.setSystemTime(timestamp);
 
-beforeEach(async () => {
+beforeAll(async () => {
   await fs.writeFile(path.join(uploadPath, "filehash"), Buffer.from(""));
-});
-
-afterAll(async () => {
-  await fs.unlink(`${uploadPath}/image-${timestamp}.jpg`);
-  await fs.unlink(`${uploadPath}/filehash`);
 });
 
 beforeEach(() => {
