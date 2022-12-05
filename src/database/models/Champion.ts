@@ -1,3 +1,4 @@
+import type { InferSchemaType } from "mongoose";
 import { Schema, model } from "mongoose";
 
 const championSchema = new Schema({
@@ -38,6 +39,8 @@ const championSchema = new Schema({
     required: true,
   },
 });
+
+export type ChampionStructure = InferSchemaType<typeof championSchema>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Champion = model("Champion", championSchema, "champions");
