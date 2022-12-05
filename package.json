@@ -8,11 +8,13 @@
     "build": "tsc",
     "build:dev": "tsc -w",
     "start": "node .",
-    "start:dev": "node --watch .",
-    "prepare": "husky install",
-    "test": "jest",
+    "start:dev": "nodemon .",
+    "test": "npm run test:supertest && npm run test:unit",
+    "test:unit": "jest --config=jest.config.cjs",
+    "test:supertest": "jest --config=jest.supertest.config.cjs",
     "test:dev": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "npm run test:supertest -- --coverage --watchAll=false && npm run test:unit -- --coverage --watchAll=false",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
