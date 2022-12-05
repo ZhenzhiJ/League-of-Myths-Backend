@@ -72,7 +72,6 @@ export const createChampion = async (
       abilityE,
       ultimateR,
     };
-
     const createNewChampion = await Champion.create(newChampion);
 
     const user = await User.findById(userId);
