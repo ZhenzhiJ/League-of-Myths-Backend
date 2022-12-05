@@ -1,7 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import CustomError from "../../../customError/CustomError.js";
 import Champion from "../../../database/models/Champion.js";
+import User from "../../../database/models/User.js";
 import type { CustomRequest } from "../../CustomRequest.js";
+import type { ChampionStructure } from "./types.js";
 
 export const loadChampions = async (
   req: CustomRequest,
@@ -36,5 +38,57 @@ export const deleteChampion = async (
     );
 
     next(fatalError);
+  }
+};
+
+export const createChampion = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userId } = req.params;
+
+  const {
+    name,
+    role,
+    passive,
+    image,
+    imageBackup,
+    abilityQ,
+    abilityW,
+    abilityE,
+    ultimateR,
+  } = req.body as ChampionStructure;
+
+  try {
+    const newChampion: ChampionStructure = {
+      name,
+      role,
+      passive,
+      image,
+      imageBackup,
+      abilityQ,
+      abilityW,
+      abilityE,
+      ultimateR,
+    };
+
+    const createNewChampion = await Champion.create(newChampion);
+
+    const user = await User.findById(userId);
+
+    user.champions.push(createNewChampion.id);
+
+    await User.findByIdAndUpdate(userId, user);
+
+    res.status(201).json({ message: "Champion created" });
+  } catch (error: unknown) {
+    const newError = new CustomError(
+      (error as Error).message,
+      "Failed to create champion",
+      500
+    );
+
+    next(newError);
   }
 };
