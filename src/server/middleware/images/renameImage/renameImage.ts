@@ -2,7 +2,7 @@ import type { NextFunction, Response } from "express";
 import fs from "fs/promises";
 import path from "path";
 import type { ChampionStructure } from "../../../../database/models/Champion";
-import environment from "../../../../loadEnvironment.js";
+import environment from "../../../../loadEnvironment";
 import type { CustomRequest } from "../../../CustomRequest";
 
 const { uploadPath } = environment;
