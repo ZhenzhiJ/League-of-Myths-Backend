@@ -26,21 +26,21 @@ const timestamp = Date.now();
 jest.useFakeTimers();
 jest.setSystemTime(timestamp);
 
+beforeEach(async () => {
+  await fs.writeFile(path.join(uploadPath, "filehash"), Buffer.from(""));
+});
+
+afterAll(async () => {
+  await fs.unlink(`${uploadPath}/image-${timestamp}.jpg`);
+  await fs.unlink(`${uploadPath}/filehash`);
+});
+
 beforeEach(() => {
   jest.clearAllMocks();
 });
 
 describe("Given a imagesRename middleware", () => {
   const expectedFileName = `image-${timestamp}.jpg`;
-
-  beforeEach(async () => {
-    await fs.writeFile(path.join(uploadPath, "filehash"), Buffer.from(""));
-  });
-
-  afterAll(async () => {
-    await fs.unlink(`${uploadPath}/image-${timestamp}.jpg`);
-    await fs.unlink(`${uploadPath}/filehash`);
-  });
 
   describe("When it receives a CustomRequest with an image file 'image.jpg'", () => {
     test("Then it should rename the file by adding a time stamp to the original name and call next", async () => {
