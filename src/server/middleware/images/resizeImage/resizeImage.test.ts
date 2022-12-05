@@ -1,11 +1,10 @@
 import type { NextFunction } from "express";
 import fs from "fs/promises";
 import { getRandomChampion } from "../../../../factories/championFactory";
-import environment from "../../../../loadEnvironment";
 import type { CustomRequest } from "../../../CustomRequest";
 import resizeImage from "./resizeImage";
 
-const { uploadPath } = environment;
+const uploadPath = "assets/images";
 
 const newChampion = getRandomChampion();
 
@@ -33,11 +32,11 @@ const req: Partial<CustomRequest> = {
 const next = jest.fn() as NextFunction;
 
 beforeAll(async () => {
-  await fs.writeFile(`${uploadPath}/randomsession`, "randomsession");
+  await fs.writeFile(`${uploadPath}/randomchampion`, "randomchampion");
 });
 
 afterAll(async () => {
-  await fs.unlink(`${uploadPath}/randomsession`);
+  await fs.unlink(`${uploadPath}/randomchampion`);
 });
 
 describe("Given the imageResize middleware", () => {
