@@ -7,5 +7,6 @@ export interface CustomRequest<
   ResBody = any,
   ReqBody = any
 > extends Request<P, ResBody, ReqBody> {
+  userId?: string;
   champions?: Types.ObjectId[];
 }
