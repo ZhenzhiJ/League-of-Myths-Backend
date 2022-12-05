@@ -2,10 +2,11 @@ import fs from "fs/promises";
 import path from "path";
 import type { ChampionStructure } from "../../../../database/models/Champion";
 import { getRandomChampion } from "../../../../factories/championFactory";
+import environment from "../../../../loadEnvironment";
 import type { CustomRequest } from "../../../CustomRequest.js";
 import renameImage from "./renameImage";
 
-const uploadPath = "assets/images";
+const { uploadPath } = environment;
 
 const newChampion = getRandomChampion();
 

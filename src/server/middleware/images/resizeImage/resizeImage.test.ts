@@ -1,11 +1,11 @@
 import type { NextFunction } from "express";
 import fs from "fs/promises";
 import { getRandomChampion } from "../../../../factories/championFactory";
+import environment from "../../../../loadEnvironment";
 import type { CustomRequest } from "../../../CustomRequest";
 import resizeImage from "./resizeImage";
 
-const uploadPath = "assets/images";
-
+const { uploadPath } = environment;
 const newChampion = getRandomChampion();
 
 let mockToFile = jest.fn();
