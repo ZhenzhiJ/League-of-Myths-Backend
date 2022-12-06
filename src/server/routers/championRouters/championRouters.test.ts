@@ -5,6 +5,25 @@ import connectDatabase from "../../../database/connectDatabase";
 import type { ChampStructure } from "../../controllers/championControllers/types";
 import app from "../../app";
 import Champion from "../../../database/models/Champion";
+import User from "../../../database/models/User";
+import { bucket } from "../../middleware/images/backupImage/backupImage";
+
+let server: MongoMemoryServer;
+
+bucket.upload = jest.fn();
+
+beforeAll(async () => {
+  server = await MongoMemoryServer.create();
+  await connectDatabase(server.getUri());
+  await Champion.create(newChampion1);
+  await Champion.create(newChampion2);
+});
+
+afterAll(async () => {
+  await User.deleteMany({});
+  await mongoose.disconnect();
+  await server.stop();
+});
 
 const newChampion1: ChampStructure = {
   name: "pokachu",
@@ -14,8 +33,8 @@ const newChampion1: ChampStructure = {
   abilityE: "cola ferrea",
   abilityW: "surf",
   ultimateR: "vuelo",
-  image: "asd.png",
-  imageBackup: "asd.png",
+  image: "asdadadadad.png",
+  imageBackup: "asasdadsadadd.png",
   createdBy: new mongoose.Types.ObjectId(),
 };
 
@@ -27,24 +46,10 @@ const newChampion2: ChampStructure = {
   abilityE: "cola ferrea",
   abilityW: "surf",
   ultimateR: "vuelo",
-  image: "asd.png",
-  imageBackup: "asd.png",
+  image: "asasdasdadadd.png",
+  imageBackup: "aasdadaddasd.png",
   createdBy: new mongoose.Types.ObjectId(),
 };
-
-let server: MongoMemoryServer;
-
-beforeAll(async () => {
-  server = await MongoMemoryServer.create();
-  await connectDatabase(server.getUri());
-  await Champion.create(newChampion1);
-  await Champion.create(newChampion2);
-});
-
-afterAll(async () => {
-  await mongoose.disconnect();
-  await server.stop();
-});
 
 describe("Given the method GET and the endpoint /champions", () => {
   describe("When it receives a request to load all champions", () => {
