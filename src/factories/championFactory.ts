@@ -14,6 +14,7 @@ const championFactory = Factory.define<ChampionWithId>(() => ({
   ultimateR: faker.random.word(),
   image: faker.image.animals(300, 300),
   imageBackup: faker.image.animals(300, 300),
+  createdBy: new mongoose.Types.ObjectId(),
 }));
 
 export const getRandomChampion = () => championFactory.build();

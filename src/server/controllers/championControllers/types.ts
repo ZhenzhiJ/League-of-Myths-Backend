@@ -13,6 +13,7 @@ export interface ChampionStructure {
   image: string;
   imageBackup: string;
   _id?: mongoose.Types.ObjectId;
+  createdBy: mongoose.Types.ObjectId;
 }
 
 export interface Champions {
