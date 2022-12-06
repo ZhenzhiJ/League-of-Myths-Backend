@@ -2,11 +2,11 @@ import request from "supertest";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import connectDatabase from "../../../database/connectDatabase";
-import type { ChampionStructure } from "../../controllers/championControllers/types";
+import type { ChampStructure } from "../../controllers/championControllers/types";
 import app from "../../app";
 import Champion from "../../../database/models/Champion";
 
-const newChampion1: ChampionStructure = {
+const newChampion1: ChampStructure = {
   name: "pokachu",
   role: "mid",
   passive: "paraliza",
@@ -16,9 +16,10 @@ const newChampion1: ChampionStructure = {
   ultimateR: "vuelo",
   image: "asd.png",
   imageBackup: "asd.png",
+  createdBy: new mongoose.Types.ObjectId(),
 };
 
-const newChampion2: ChampionStructure = {
+const newChampion2: ChampStructure = {
   name: "pokachuaa",
   role: "mid",
   passive: "paraliza",
@@ -28,6 +29,7 @@ const newChampion2: ChampionStructure = {
   ultimateR: "vuelo",
   image: "asd.png",
   imageBackup: "asd.png",
+  createdBy: new mongoose.Types.ObjectId(),
 };
 
 let server: MongoMemoryServer;

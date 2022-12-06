@@ -1,7 +1,7 @@
 import type { InferSchemaType } from "mongoose";
 import { Schema, model } from "mongoose";
 
-const championSchema = new Schema({
+export const championSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -37,6 +37,11 @@ const championSchema = new Schema({
   imageBackup: {
     type: String,
     required: true,
+  },
+  createdBy: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
   },
 });
 

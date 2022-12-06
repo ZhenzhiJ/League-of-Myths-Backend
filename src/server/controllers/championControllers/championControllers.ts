@@ -1,9 +1,10 @@
 import type { Request, Response, NextFunction } from "express";
+import mongoose from "mongoose";
 import CustomError from "../../../customError/CustomError.js";
 import Champion from "../../../database/models/Champion.js";
 import User from "../../../database/models/User.js";
 import type { CustomRequest } from "../../CustomRequest.js";
-import type { ChampionStructure } from "./types.js";
+import type { ChampionStructure, ChampStructure } from "./types.js";
 
 export const loadChampions = async (
   req: CustomRequest,
@@ -46,7 +47,7 @@ export const createChampion = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.params;
+  const { userId } = req;
 
   const {
     name,
@@ -61,7 +62,7 @@ export const createChampion = async (
   } = req.body as ChampionStructure;
 
   try {
-    const newChampion: ChampionStructure = {
+    const newChampion: ChampStructure = {
       name,
       role,
       passive,
@@ -71,7 +72,9 @@ export const createChampion = async (
       abilityW,
       abilityE,
       ultimateR,
+      createdBy: new mongoose.Types.ObjectId(userId),
     };
+
     const createNewChampion = await Champion.create(newChampion);
 
     const user = await User.findById(userId);
