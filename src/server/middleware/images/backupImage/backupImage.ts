@@ -5,6 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 import environment from "../../../../loadEnvironment.js";
 import type { ChampionStructure } from "../../../../database/models/Champion";
 import type { CustomRequest } from "../../../CustomRequest.js";
+import CustomError from "../../../../customError/CustomError.js";
 
 const { supabaseBucket, supabaseKey, supabaseUrl, uploadPath } = environment;
 
@@ -21,28 +22,36 @@ const backupImage = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.file) {
-    next();
-    return;
-  }
-
-  const { image } = req.body;
-
   try {
-    const mainImage = image;
-    const fileContent = await fs.readFile(path.join(uploadPath, mainImage));
+    const imagePath = path.join(
+      uploadPath,
+      `${req.file.filename}${req.file.originalname}`
+    );
+    await fs.rename(path.join(uploadPath, req.file.filename), imagePath);
 
-    await bucket.upload(mainImage, fileContent);
+    const filenameImage = await fs.readFile(imagePath);
+
+    await bucket.upload(
+      req.file.originalname + req.file.filename,
+      filenameImage
+    );
 
     const {
       data: { publicUrl },
-    } = bucket.getPublicUrl(mainImage);
+    } = bucket.getPublicUrl(req.file.originalname + req.file.filename);
 
+    req.body.image = imagePath;
     req.body.imageBackup = publicUrl;
 
     next();
   } catch (error: unknown) {
-    next(error);
+    const customError = new CustomError(
+      (error as Error).message,
+      "Something goes wrong uploading your image",
+      400
+    );
+
+    next(customError);
   }
 };
 

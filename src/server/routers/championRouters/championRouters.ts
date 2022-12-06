@@ -6,6 +6,7 @@ import {
   loadChampions,
   createChampion,
 } from "../../controllers/championControllers/championControllers.js";
+import auth from "../../middleware/auth/auth.js";
 import backupImage from "../../middleware/images/backupImage/backupImage.js";
 import renameImage from "../../middleware/images/renameImage/renameImage.js";
 import resizeImage from "../../middleware/images/resizeImage/resizeImage.js";
@@ -28,6 +29,7 @@ championRouter.delete(`${deleteRoute}${championId}`, deleteChampion);
 
 championRouter.post(
   createRoute,
+  auth,
   upload.single("image"),
   renameImage,
   resizeImage,
