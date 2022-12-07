@@ -5,6 +5,7 @@ import {
   deleteChampion,
   loadChampions,
   createChampion,
+  loadUserChampions,
 } from "../../controllers/championControllers/championControllers.js";
 import auth from "../../middleware/auth/auth.js";
 import backupImage from "../../middleware/images/backupImage/backupImage.js";
@@ -24,6 +25,7 @@ const upload = multer({
 const { deleteRoute, championId, createRoute } = routes;
 
 championRouter.get("", loadChampions);
+championRouter.get("/my-champions", auth, loadUserChampions);
 
 championRouter.delete(`${deleteRoute}${championId}`, deleteChampion);
 
