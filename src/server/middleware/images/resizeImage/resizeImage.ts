@@ -7,7 +7,7 @@ import type { CustomRequest } from "../../../CustomRequest";
 
 const { uploadPath } = environment;
 
-const imageResize = async (
+const resizeImage = async (
   req: CustomRequest,
   res: Response,
   next: NextFunction
@@ -31,7 +31,7 @@ const imageResize = async (
       .toFormat("webp")
       .toFile(path.join(uploadPath, `${newFileName}.webp`));
 
-    req.body.picture = `${newFileName}.webp`;
+    req.body.image = `${newFileName}.webp`;
 
     next();
   } catch (error: unknown) {
@@ -44,4 +44,4 @@ const imageResize = async (
   }
 };
 
-export default imageResize;
+export default resizeImage;
