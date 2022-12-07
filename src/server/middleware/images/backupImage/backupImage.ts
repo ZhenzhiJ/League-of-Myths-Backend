@@ -3,9 +3,8 @@ import fs from "fs/promises";
 import path from "path";
 import { createClient } from "@supabase/supabase-js";
 import environment from "../../../../loadEnvironment.js";
-import type { ChampionStructure } from "../../../../database/models/Champion";
+import type { ChampionStructure } from "../../../../database/models/Champion.js";
 import type { CustomRequest } from "../../../CustomRequest.js";
-import CustomError from "../../../../customError/CustomError.js";
 
 const { supabaseBucket, supabaseKey, supabaseUrl, uploadPath } = environment;
 
@@ -13,7 +12,7 @@ const supaBase = createClient(supabaseUrl, supabaseKey);
 
 export const bucket = supaBase.storage.from(supabaseBucket);
 
-const backupImage = async (
+const imageBackup = async (
   req: CustomRequest<
     Record<string, unknown>,
     Record<string, unknown>,
@@ -22,37 +21,29 @@ const backupImage = async (
   res: Response,
   next: NextFunction
 ) => {
+  if (!req.file) {
+    next();
+    return;
+  }
+
+  const { image } = req.body;
+
   try {
-    const imagePath = path.join(
-      uploadPath,
-      `${req.file.filename}${req.file.originalname}`
-    );
-    await fs.rename(path.join(uploadPath, req.file.filename), imagePath);
+    const mainImage = image;
+    const fileContent = await fs.readFile(path.join(uploadPath, mainImage));
 
-    const filenameImage = await fs.readFile(imagePath);
-
-    await bucket.upload(
-      req.file.originalname + req.file.filename,
-      filenameImage
-    );
+    await bucket.upload(mainImage, fileContent, { cacheControl: "31536000" });
 
     const {
       data: { publicUrl },
-    } = bucket.getPublicUrl(req.file.originalname + req.file.filename);
+    } = bucket.getPublicUrl(mainImage);
 
-    req.body.image = imagePath;
     req.body.imageBackup = publicUrl;
 
     next();
   } catch (error: unknown) {
-    const customError = new CustomError(
-      (error as Error).message,
-      "Something goes wrong uploading your image",
-      400
-    );
-
-    next(customError);
+    next(error);
   }
 };
 
-export default backupImage;
+export default imageBackup;
