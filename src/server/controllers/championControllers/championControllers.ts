@@ -23,13 +23,7 @@ export const loadChampions = async (
 export const loadUserChampions = async (req: CustomRequest, res: Response) => {
   const { userId } = req;
 
-  const user = await User.findById(userId);
-
-  const myChampions = user.champions.filter(
-    (createBy) => createBy.toString() !== userId
-  );
-
-  const myUserChampions = await Champion.findById(myChampions);
+  const myUserChampions = await Champion.find({ createdBy: userId });
 
   res.status(200).json({ myUserChampions });
 };
